@@ -1,0 +1,72 @@
+// Assignment 3.1
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Student
+{
+	string last_name;
+	string faculty;
+	string uniqueID;
+	string first_name;
+public:
+	Student (string, string, string);
+	void set_name(string, string);
+	void set_id (string);
+	//void set_birth_date(int, string, int);
+	string get_name();
+	string get_id();
+	
+};
+
+Student::Student (string x, string y, string f) //constructor
+{
+	first_name = x;
+	last_name = y;
+	faculty = f;
+
+
+}
+
+void Student::set_name (string fname, string lname)
+{
+	first_name = fname;
+	last_name = lname;
+	
+}
+
+void Student::set_id (string uid)
+{
+	uniqueID = "AUA_" + faculty +"_" + uid;
+}
+
+string Student::get_name()
+{
+	string getname;
+	getname = first_name;
+	return getname;
+}
+
+string Student::get_id()
+{
+	string getid;
+	getid = uniqueID;
+	return getid;
+}
+
+int main()
+{
+	Student a ("Aram", "Darbinyan", "CS");
+	a.set_id("5");
+	
+	Student b(a);
+	b.set_name ("Anna", "Sargsyan");
+	b.set_id("6");
+	
+	cout << "Below is the information about the registered students" << endl;
+	cout << a.get_name() << " " << a.get_id() << endl;
+	cout << b.get_name() << " " << b.get_id() << endl;
+	
+	return 0;
+}
