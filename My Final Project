@@ -1,0 +1,284 @@
+//  The Program SIMPLE BANK creates a bank customers, shows the list of bank
+//  customers, opens a credit line and calculates monly payments.
+//
+
+#include <string>
+#include <iostream>
+#include <iomanip>
+using namespace std;
+//global variables
+int noCust = 0;
+//-----CLASSES ----------------
+//-----Class bank for adding new customer, deposit and withrow money
+//
+class bank
+{
+public: struct customer
+{
+	string name;
+	int customer_id;
+	int account_no;
+	int usd_total;
+	float creditLn = 0;
+};
+public: customer customerRecords[6];
+		// Member functions declaration
+		void add_customer(void);
+		void show_customer(int i);
+		bool chk_customer(string name);
+		int withrow_money(customer, int);
+		bank();
+		~bank();
+};
+//---
+//---Member functions definitions in Class bank
+//---
+void bank::add_customer(void)
+{
+	cout << "Enter cutomer's name: ";
+	cin.ignore();
+	getline(cin, customerRecords[noCust].name);
+	cout << "You entered: " << customerRecords[noCust].name << "\n";
+	cout << "Enter cutomer's id: ";
+	//cin.ignore();
+	cin >> customerRecords[noCust].customer_id;
+	cout << "You entered: " << customerRecords[noCust].customer_id << "\n";
+	cin.ignore();
+	cout << "Enter account number: ";
+	cin >> customerRecords[noCust].account_no;
+	cout << "You entered " << customerRecords[noCust].account_no << "\n";
+	cin.ignore();
+	cout << "Enter deposit amount: ";
+	cin >> customerRecords[noCust].usd_total;
+	cout << "You entered: " << customerRecords[noCust].usd_total << "\n";
+}
+//
+// Member functions definitions
+//
+void bank::show_customer(int i)
+{
+	if (noCust != 0)
+	{
+		cout << "Name: " << customerRecords[i].name << ",   ";
+		cout << "ID: " << customerRecords[i].customer_id << ",   ";
+		cout << "Account No: " << customerRecords[i].account_no << ",   ";
+		cout << "Deposit: " << customerRecords[i].usd_total << ",   ";
+		cout << "Credit:" << customerRecords[i].creditLn << "\n";
+	}
+	//else { cout << "There are no customers in the bank! "; }
+}
+//---
+//---Member functions definitions in Class bank
+//---
+bool bank::chk_customer(string name)
+{
+	string nameTemp;
+	if (noCust != 0)
+	{
+		for (int i = 0; i < noCust; ++i)
+		{
+			nameTemp = customerRecords[i].name;
+			if (name == nameTemp)
+			{
+				cout << "Customer " << name << " exists!\n\n";
+				return true;
+			}
+		}
+		cout << "Customer " << name << " doesn't exist!\n\n";
+		return false;
+	}
+	else
+	{
+		cout << "There are no customers in the bank!\n";
+		return false;
+	}
+}
+//---
+//---Conctructor and deconstructor
+//---
+bank::bank(void)
+{
+	cout << "Object is being created\n";
+}
+bank::~bank(void)
+{
+	cout << "Object is being deleted\n";
+}
+//---
+//---CLASS CREDIT
+//---Class credit for adding new credit and calculating payments
+//---
+class credit
+{
+public: int month1, year1, month2, year2, total_month, total_year = 1;
+public: float credit_money, percentage, prcSum = 1.0;
+public: float monthly_std_payment, monthly_prc_payment, remaining_money = 1.0;
+		// Member functions declaration
+		void openCredit();
+		void payCalc();
+		credit();
+		~credit();
+};
+//
+// CLASS CREDIT: Member functions definitions
+//
+void credit::openCredit()
+{
+	// Define the strating date
+	cout << "Credit amount: ";
+	cin >> credit_money;
+	cout << "Annual percentage (type without %): ";
+	cin >> percentage;
+
+	// Define the strating date
+	cout << "Enter the start date (month and year) - Month? ";
+	cin >> month1;
+	if (month1 >= 1 && month1 <= 12) {}
+	else cout << "Error\n";
+	cout << "Enter the start date (month and year) - Year? ";
+	cin >> year1;
+	if (year1 >= 1000) {}
+	else cout << "Error\n";
+
+	//Define the end date
+	cout << "Enter the end date (month and year) - Month? ";
+	cin >> month2;
+	if (month2 >= 1 && month2 <= 12) {}
+	else cout << "Error\n";
+	cout << "Enter the end date (month and year) - Year? ";
+	cin >> year2;
+	if (year2 >= year1) {}
+	else cout << "Error\n";
+
+	//Calculation of credit periode in months
+	if (year1 == year2)
+	{
+		total_month = month2 - month1;
+		cout << "----------------------------------------------------\n"
+			<< "Credit line is opened! The credit lenght is " << total_month << " months.\n"
+			<< "-----------------------------------------------------\n";
+		if (total_month <= 0)
+		{
+			cout << "Error\n";
+		}
+	}
+	if (year1 < year2)
+	{
+		total_year = year2 - year1;
+		total_month = (total_year * 12) - month1 + month2;
+		cout << "-----------------------------------------------------" << '\n'
+			<< "Credit line is opened! The credit lenght is " << total_month << " months." << '\n'
+			<< "-----------------------------------------------------" << '\n';
+	}
+}
+//
+// CLASS CREDIT: Member functions definitions
+//
+void credit::payCalc()
+{
+	//Monthly payment
+
+	monthly_std_payment = credit_money / total_month;
+	cout << "Your monthly payment is: ";
+	cout << setprecision(4) << monthly_std_payment << "USD\n";
+	cout << "Month no: 1 payments are: \n";
+	//Monthly percentage
+	cout << "---Remaining amount of the credit is: " << credit_money << "USD\n";
+	cout << "---Monthly percentage to pay is: " << credit_money * percentage / 100 / 12 << "USD\n";
+	prcSum = credit_money * percentage / 100 / 12;
+	remaining_money = credit_money - monthly_std_payment;
+	for (int i = 1; i < total_month; i++)
+	{
+		monthly_prc_payment = remaining_money * percentage / 100 / 12;
+		prcSum = prcSum + monthly_prc_payment;
+		int n = i + 1;
+		cout << "Month no: " << n << "payments are:\n";
+		cout << "---Remaining credit amount is: " << remaining_money << "USD \n";
+		cout << "---Monthly percentage you need to pay is: " << monthly_prc_payment << "USD \n";
+		remaining_money = remaining_money - monthly_std_payment;
+	}
+	cout << "----------------------------------------------" << '\n'
+		<< "------ Total percentage to pay is: " << prcSum << "USD \n"
+		<< "----------------------------------------------" << '\n';
+}
+credit::credit(void)
+{
+	cout << "Object is being created \n";
+}
+credit::~credit(void)
+{
+	cout << "Object is being deleted \n";
+}
+//
+//-----------------MAIN----------------------------
+//
+int main(int argc, const char * argv[])
+{
+	cout << "Welcome to SIMPLE BANK!\n" << "version 0.12\n\n";
+	// new object
+	bank newBank;
+	credit newCredit;
+	// loop for actions selection
+	int  action;
+	do
+	{
+		cout << "\nEnter action number: \n" << "    INSTRUCTION:\n"
+			<< "    ---------------------------------\n"
+			<< "    - Add a new customer ---------- 1\n"
+			<< "    - Show the list of customers -- 2\n"
+			<< "    - Open a new credit ----------- 3\n"
+			<< "    - Show credit payments -------- 4\n"
+			<< "    - Exit the program ------------ 0\n"
+			<< "    ---------------------------------\n";
+
+		cin >> action;
+		switch (action)
+		{
+		case 1:
+		{
+			cout << "Add client action is selected.\n";
+			newBank.add_customer();
+			noCust++;
+			break;
+		}
+		case 2:
+		{
+			cout << "The list of customers:\n";
+			for (int i = 0; i < noCust; ++i)
+			{
+				newBank.show_customer(i);
+			}
+			if (noCust == 0) cout << "There are no customers in the bank!\n ";
+			cout << endl;
+			break;
+		}
+		case 3:
+		{
+			string name;
+			cout << "Name of customer?: ";
+			cin >> name;
+			//check customer
+			if (newBank.chk_customer(name)) newCredit.openCredit();
+			break;
+		}
+		case 4:
+		{
+			string name;
+			cout << "Name of customer?: ";
+			cin >> name;
+			//check customer
+			if (newBank.chk_customer(name)) newCredit.payCalc();
+			break;
+		}
+		case 0:
+		{
+			cout << "Good bye, see you next time!\n\n";
+			break;
+		}
+		default:
+			cout << "Invalid action. Please choose other action!\n\n";
+		}
+
+	} while (action != 0);
+
+}
