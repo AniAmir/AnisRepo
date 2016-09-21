@@ -1,0 +1,38 @@
+// bubble sort
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int i, j, n, array[100];
+	cout << "Enter the number of elements:\n";
+	cin >> n;
+	cout << "Enter the elements:\n";
+
+	for (i = 0; i<n; i++)
+	{
+		cin >> array[i];
+	}
+
+
+	for (i = 0; i <= n - 1; i++)
+	{
+		for (j = i + 1; j <= n - 1; j++)
+		{
+			int temporar;
+
+			if (array[i] > array[j])
+			{
+				temporar = array[i];
+				array[i] = array[j];
+				array[j] = temporar;
+			}
+		}
+	}
+
+	cout << "Sorted array: " << endl;
+	for (i = 0; i <= n - 1; i++)
+	{
+		cout << array[i] << " ";
+	}
+}
