@@ -1,0 +1,44 @@
+//selection sort
+#include <iostream>
+#include <cstdlib>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    
+    int i, n, array[100];
+    cout<<"Enter the number of elements:\n";
+    cin>>n;
+    cout<<"Enter the elements:\n";
+    
+    for(i=0;i<n;i++)
+    {
+        cin >> array[i] ;
+    }
+    
+//	int array[] = { 4, 9, 2, 1, 6, 8, 3, 0, 5, 7 };
+	for (int i = 0; i< n; i++)
+	{
+		int smallest = array[i];
+		int smallest_index = i;
+
+		for (int j = i; j < n; j++)
+		{
+			if (array[j] < smallest)
+			{
+				smallest = array[j];
+				smallest_index = j;
+			}
+		}
+
+		swap(array[i], array[smallest_index]);
+	}
+
+    cout << "Sorted elements:\n ";
+	for (int i = 0; i < n; i++)
+	{
+		cout << array[i] << " ";
+	}
+	
+}
