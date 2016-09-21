@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+ 
+int main()
+{
+    int i,j,n,place,array[100];
+    cout<<"Enter the number of elements: \n";
+    cin>>n;
+    cout<<"Enter the elements\n";
+ 
+    for(i=0; i<n ;i++)
+    {
+        cin>>array[i];
+    }
+ 
+    for(i=1; i<=n-1; i++)
+    {
+        place=array[i];
+        j=i-1;
+ 
+        while((place<array[j])&&(j>=0))
+        {
+            array[j+1]=array[j];   
+            j=j-1;
+        }
+ 
+        array[j+1]=place;    
+    }
+ 
+    cout<<"Sorted list: \n";
+    for(i=0; i<n; i++)
+    {
+        cout<<array[i]<<" ";
+    }
+ 
+}
