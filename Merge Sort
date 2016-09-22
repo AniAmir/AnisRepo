@@ -1,0 +1,61 @@
+//has bugs
+#include <iostream>
+using namespace std;
+ 
+void merge(int array[], int length, int low, int mid, int high)
+{
+	int temp[length];
+	for (int i = low; i <= high; ++i)
+	{
+		temp[i] = array[i];
+	}
+	int i = low;
+	int j = mid + 1;
+	int k = low; 
+	while (i <= mid && j <= high) 
+	{
+		if (temp[i] <= temp[j]) 
+		{
+			array[k] = temp[i];
+			++i;
+		}
+		else {
+			array[k] = temp[j];
+			++j;
+		}
+		++k;
+	}
+	while (i <= mid) {
+		array[k] = temp[i];
+		++k;
+		++i;
+	}
+
+}
+
+void mergeSort(int array[], int length, int low, int high)
+{
+	if (low < high)
+	{
+		int mid = (low + high) / 2; //finging the middle and dividing 
+		mergeSort(array, length, low, mid);
+		mergeSort(array, length, mid + 1, high);
+		merge(array, length, low, mid, high);
+	}
+}
+
+int main() {
+	int i, length, arr[100];
+	cout << "Enter the number of elements: \n";
+	cin >> length;
+	cout << "Enter the elements\n";
+
+	for (i = 0; i<length; i++)
+	{
+		cin >> arr[i];
+	}
+	mergeSort(arr, length, 0, length); {
+		cout << arr[i] << " ";
+	}
+	return 0;
+}
