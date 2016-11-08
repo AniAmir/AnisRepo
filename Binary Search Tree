@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+
+
+struct Node{
+    int data;
+    struct Node *left;
+    struct Node *right;
+};
+
+struct tree{
+    
+    tree *left, *right;
+    int data;
+    Node *root = NULL;
+    Node *parent = NULL;
+    
+    tree();
+    ~tree();
+    void insert();
+    void inorder(tree);
+    void preorder(tree);
+    void postorder(tree);
+    Node* Insert(Node, char); 
+};
+
+tree::tree(){                           
+    this->left = NULL;
+    this->right = NULL;
+    this->parent = NULL;
+}
+
+tree::~tree(){                         
+    delete left;
+    delete right;
+    delete root;
+    delete parent;
+};
+
+void tree::insert(){
+    
+    int value,c = 0;
+    while (c < 20)
+	{
+        if (root == NULL)
+		{
+            root = new Node;
+            cout<<"enter value of root node\n";
+            cin>>root->data;
+            root->right=NULL;
+            root->left=NULL;
+        }
+        	else
+			{
+            parent = root;
+            cout<<"Enter value of node\n";
+            cin>>value;
+            while(true)
+			{
+                if (value < parent->data)
+				{
+                    if (parent->left == NULL)
+					{
+                        parent->left = new Node;
+                        parent = parent->left;
+                        parent->data = value;
+                        parent->left = NULL;
+                        parent->right = NULL;
+                        cout<<"value entered in left\n";
+                        break;
+                    }
+                    else if (parent->left != NULL)
+					{
+                        parent = parent->left;
+                    }
+                }
+                else if (value > parent->data)
+				{
+                    if (parent->right == NULL)
+					{
+                        parent->right = new Node;
+                        parent = parent->right;
+                        parent->data = value;
+                        parent->left = NULL;
+                        parent->right = NULL;
+                        cout<<"value entered in right\n";
+                        break;
+                    }
+                    else if (parent->right != NULL)
+					{
+                        parent = parent->right;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+int main() {
+	return 0;
+}
